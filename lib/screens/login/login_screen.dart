@@ -93,10 +93,7 @@ mutation Login(\$email: String!, \$password: String!) {
       );
     }, onCompleted: (Map<String, dynamic> data) async {
       SharedPreferences prefs = await SharedPreferences.getInstance();
-
-      print(data);
       prefs.setString('token', data['login']['token']);
-      // TODO: store response to shared_preferences
     });
     var forgotPasswordBtn = FlatButton(
       onPressed: _forgotPassword,
@@ -117,6 +114,7 @@ mutation Login(\$email: String!, \$password: String!) {
               Padding(
                 padding: inputEdgeInsets(),
                 child: TextFormField(
+                  autovalidate: true,
                   onSaved: (val) => _email = val,
                   validator: (val) {
                     return val.length < 10
@@ -129,6 +127,8 @@ mutation Login(\$email: String!, \$password: String!) {
               Padding(
                 padding: inputEdgeInsets(),
                 child: TextFormField(
+                  obscureText: true,
+                  autovalidate: true,
                   onSaved: (val) => _password = val,
                   decoration: InputDecoration(labelText: "Password"),
                 ),
